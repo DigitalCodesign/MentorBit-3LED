@@ -1,2 +1,2 @@
-# MentorBit-3LED-Module
+# MentorBit-3LED
 Librería para Módulo MentorBit de diodos LED
