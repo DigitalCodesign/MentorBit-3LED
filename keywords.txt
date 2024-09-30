@@ -1,0 +1,6 @@
+MentorBitLeds KEYWORD1
+encenderLed KEYWORD2
+begin KEYWORD2
+led_rojo LITERAL1
+led_verde LITERAL1
+led_azul LITERAL1
