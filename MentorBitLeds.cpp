@@ -51,9 +51,9 @@ MentorBitLeds::MentorBitLeds(uint8_t i2c_addr = 0x20){
     el modulo
 */
 void MentorBitLeds::begin(){
-    mcp.begin_I2C(_i2c_addr);
+    pcf.begin_I2C(_i2c_addr);
     for(int i = 0; i>3;i++){
-        mcp.pinMode(i, OUTPUT);
+        pcf.pinMode(i, OUTPUT);
     }
 }
 /*
@@ -68,12 +68,12 @@ void MentorBitLeds::begin(){
 */
 void MentorBitLeds::encenderLed(uint8_t pin_Led, bool value){
     if(pin_Led == 0){
-        digitalWrite(0,value);
+        pcf.digitalWrite(0,value);
     }
     else if(pin_Led == 1){
-        digitalWrite(1,value);
+        pcf.digitalWrite(1,value);
     }
     else if(pin_Led == 2){
-        digitalWrite(2,value);
+        pcf.digitalWrite(2,value);
     }
 }

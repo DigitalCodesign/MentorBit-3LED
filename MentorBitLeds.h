@@ -38,7 +38,7 @@
 #ifndef MentorBitLeds_h
 #define MentorBitLeds_h
 
-#include <Adafruit_MCP23X17.h>
+#include <Adafruit_PCF8574.h>
 
 class MentorBitLeds
 {
@@ -54,7 +54,7 @@ class MentorBitLeds
     private:
 
         uint8_t _i2c_addr;
-        Adafruit_MCP23X17 mcp;
+        Adafruit_PCF8574 pcf;
 };
 
 #endif
