@@ -51,7 +51,7 @@ MentorBitLeds::MentorBitLeds(uint8_t i2c_addr = 0x20){
     el modulo
 */
 void MentorBitLeds::begin(){
-    pcf.begin_I2C(_i2c_addr);
+    pcf.begin(_i2c_addr);
     for(int i = 0; i>3;i++){
         pcf.pinMode(i, OUTPUT);
     }

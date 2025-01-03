@@ -38,9 +38,10 @@
 #ifndef MentorBitLeds_h
 #define MentorBitLeds_h
 
+#include <MentorPort.h>
 #include <Adafruit_PCF8574.h>
 
-class MentorBitLeds
+class MentorBitLeds : public MentorPort
 {
     public:
 
