@@ -44,7 +44,7 @@ class MentorBitLeds
 {
     public:
 
-        MentorBitLeds(uint8_t i2c_addr);
+        MentorBitLeds(uint8_t i2c_addr = 0x20);
         void begin();
         void encenderLed(uint8_t pin_Led, bool value);
         const uint8_t led_rojo = 0;
