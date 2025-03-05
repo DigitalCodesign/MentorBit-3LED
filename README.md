@@ -1,70 +1,60 @@
-# MentorBit-3Led
+# MentorBitLeds
+
+Librería para el control de LEDs RGB mediante un expansor I2C PCF8574 en módulos compatibles con MentorBit.
 
 ## Descripción
 
-Esta librería está construida por Digital Codesign para interactuar con el módulo **MentorBit Leds**, diseñado principalmente para el kit educacional **MentorBit**. El módulo **MentorBit Leds** permite controlar tres LEDs (rojo, verde y azul) conectados a la placa utilizando el protocolo I2C. Esta librería facilita la manipulación de dichos LEDs, permitiendo encenderlos o apagarlos de manera sencilla.
-
-Puedes encontrar nuestro **MentorBit** y mucho más material de electrónica y robótica en nuestra tienda oficial: [https://digitalcodesign.com/shop](https://digitalcodesign.com/shop)
+La librería `MentorBitLeds` facilita el control de LEDs RGB en módulos compatibles con MentorBit que utilizan el expansor I2C PCF8574. Permite encender y apagar individualmente los LEDs rojo, verde y azul, ideal para indicadores visuales y efectos de iluminación.
 
 ## Modo de Empleo
 
-Una vez que tengamos la librería instalada desde el Arduino IDE, necesitamos incluir la librería con la siguiente línea:
+1.  **Instalación:**
+    * Abre el IDE compatible con MentorBit.
+    * Ve a "Herramientas" -> "Gestionar librerías..."
+    * Busca "MentorBitLeds" e instálala.
+    * **Nota:** Esta librería depende de la librería `Adafruit_PCF8574`. Asegúrate de que también esté instalada.
 
-```cpp
-#include <MentorBitLeds.h>
-```
+2.  **Ejemplo básico:**
+
+    ```c++
+    #include <MentorBitLeds.h>
+
+    MentorBitLeds leds;
+
+    void setup() {
+      leds.begin();
+      leds.encenderLed(leds.led_rojo, true); // Enciende el LED rojo
+      delay(1000);
+      leds.encenderLed(leds.led_rojo, false); // Apaga el LED rojo
+      leds.encenderLed(leds.led_verde, true); // Enciende el LED verde
+      delay(1000);
+      leds.encenderLed(leds.led_verde, false); // Apaga el LED verde
+      leds.encenderLed(leds.led_azul, true); // Enciende el LED azul
+      delay(1000);
+      leds.encenderLed(leds.led_azul, false); // Apaga el LED azul
+    }
+
+    void loop() {
+      // Los LEDs se encienden y apagan secuencialmente una vez en el setup.
+    }
+    ```
+
+## Constructor y Métodos Públicos
 
 ### Constructor
 
-Una vez incluida la librería, usamos el constructor para crear el objeto del módulo **Leds**, y definimos la dirección I2C para el control de los LEDs:
-
-```cpp
-MentorBitLeds leds(I2C_ADDRESS);
-```
-
-Donde `I2C_ADDRESS` es la dirección I2C del módulo de LEDs (por defecto es `0x20`).
-
-### Uso
-
-Con el objeto `leds` definido, podemos encender o apagar los LEDs utilizando la función `encenderLed()`. Esta función recibe como parámetros el número de pin del LED y un valor para encenderlo o apagarlo.
-
-#### Encender o apagar un LED
-
-```cpp
-leds.encenderLed(leds.led_rojo, true);  // Enciende el LED rojo
-leds.encenderLed(leds.led_rojo, false); // Apaga el LED rojo
-
-leds.encenderLed(leds.led_verde, true);  // Enciende el LED verde
-leds.encenderLed(leds.led_verde, false); // Apaga el LED verde
-
-leds.encenderLed(leds.led_azul, true);  // Enciende el LED azul
-leds.encenderLed(leds.led_azul, false); // Apaga el LED azul
-```
-
-- `pin_Led`:
-  - `led_rojo`: LED rojo (pin 0)
-  - `led_verde`: LED verde (pin 1)
-  - `led_azul`: LED azul (pin 2)
-- `value`:
-  - `true` (1): Encender el LED
-  - `false` (0): Apagar el LED
+* `MentorBitLeds(uint8_t i2c_addr = 0x20)`: Crea un objeto `MentorBitLeds`.
+    * `i2c_addr`: Dirección I2C del expansor PCF8574. El valor predeterminado es `0x20`.
 
 ### Métodos
 
-#### `void begin()`
+* `void begin()`: Inicializa el expansor PCF8574 y configura los pines para los LEDs como salidas.
+* `void encenderLed(uint8_t pin_Led, bool value)`: Enciende o apaga el LED especificado.
+    * `pin_Led`: Constante que representa el LED a controlar (`leds.led_rojo`, `leds.led_verde`, `leds.led_azul`).
+    * `value`: `true` para encender el LED, `false` para apagarlo.
 
-Inicializa el módulo de LEDs y configura los pines necesarios para su control. Este método debe llamarse dentro de la función `setup()` del programa.
+### Constantes Públicas
 
-#### `void encenderLed(uint8_t pin_Led, bool value)`
-
-Enciende o apaga el LED seleccionado.
-
-- `pin_Led`: Número de pin del LED (0 = Rojo, 1 = Verde, 2 = Azul).
-- `value`: Valor de encendido/apagado del LED (1 = Encendido, 0 = Apagado).
-
-## Atributos
-
-- `led_rojo`: Indica el pin que corresponde al LED rojo (pin 0).
-- `led_verde`: Indica el pin que corresponde al LED verde (pin 1).
-- `led_azul`: Indica el pin que corresponde al LED azul (pin 2).
-
+* `const uint8_t led_rojo = 0`: Representa el pin del LED rojo.
+* `const uint8_t led_verde = 1`: Representa el pin del LED verde.
+* `const uint8_t led_azul = 2`: Representa el pin del LED azul.
