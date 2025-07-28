@@ -1,60 +1,125 @@
-# MentorBitLeds
+# MentorBit-3LED
 
-Librería para el control de LEDs RGB mediante un expansor I2C PCF8574 en módulos compatibles con MentorBit.
+Esta librería está diseñada para que puedas controlar fácilmente un **módulo con tres LEDs independientes** usando la placa MentorBit y el protocolo de comunicación I2C.
+
+Si estás empezando en el mundo de la electrónica, ¡no te preocupes! MentorBit está pensado para que aprender sea fácil y divertido. Esta placa ya incluye un montón de componentes (LEDs, pulsadores, pantallas, etc.) y utiliza conectores especiales (JST) para que puedas añadir nuevos sensores y módulos sin tener que pelearte con un montón de cables. Pásate por nuestra web para saber más de MentorBit y nuestros productos [pinchando aquí](https://digitalcodesign.com/).
+
+![Render del MentorBit módulo de diodos LED.](https://github.com/DigitalCodesign/MentorBit-3LED/blob/main/assets/3LED_Module.png)
+
+Con esta librería, podrás encender y apagar individualmente los LEDs del módulo, creando efectos visuales y señales de estado fácilmente.
+
+---
 
 ## Descripción
 
-La librería `MentorBitLeds` facilita el control de LEDs RGB en módulos compatibles con MentorBit que utilizan el expansor I2C PCF8574. Permite encender y apagar individualmente los LEDs rojo, verde y azul, ideal para indicadores visuales y efectos de iluminación.
+### ¿Qué es el módulo MentorBit de diodos LED?
 
-## Modo de Empleo
+Este módulo incluye tres LEDs que se pueden controlar individualmente mediante comandos I2C. Cada LED puede ser encendido o apagado de forma independiente, lo que permite crear patrones de señalización o mostrar estados de un sistema.
 
-1.  **Instalación:**
-    * Abre el IDE compatible con MentorBit.
-    * Ve a "Herramientas" -> "Gestionar librerías..."
-    * Busca "MentorBitLeds" e instálala.
-    * **Nota:** Esta librería depende de la librería `Adafruit_PCF8574`. Asegúrate de que también esté instalada.
+Está especialmente diseñado para integrarse de forma rápida con la placa MentorBit.
 
-2.  **Ejemplo básico:**
+---
 
-    ```c++
-    #include <MentorBitLeds.h>
+### ¿Qué hace esta librería?
 
-    MentorBitLeds leds;
+La librería **MentorBit-3LED** facilita el control de los tres LEDs del módulo a través de funciones simples que se comunican por I2C. Puedes encender, apagar o alternar el estado de cada LED de forma individual sin preocuparte por detalles de bajo nivel.
 
-    void setup() {
-      leds.begin();
-      leds.encenderLed(leds.led_rojo, true); // Enciende el LED rojo
-      delay(1000);
-      leds.encenderLed(leds.led_rojo, false); // Apaga el LED rojo
-      leds.encenderLed(leds.led_verde, true); // Enciende el LED verde
-      delay(1000);
-      leds.encenderLed(leds.led_verde, false); // Apaga el LED verde
-      leds.encenderLed(leds.led_azul, true); // Enciende el LED azul
-      delay(1000);
-      leds.encenderLed(leds.led_azul, false); // Apaga el LED azul
-    }
+---
 
-    void loop() {
-      // Los LEDs se encienden y apagan secuencialmente una vez en el setup.
-    }
-    ```
+### ¿Qué puedes construir con este módulo?
 
-## Constructor y Métodos Públicos
+- Indicadores de estado para sistemas (por ejemplo, conexión, error, proceso).
+- Señalización visual en proyectos educativos.
+- Juegos o actividades interactivas por color.
+- Luces indicadoras en robótica o sistemas embebidos.
 
-### Constructor
+---
 
-* `MentorBitLeds(uint8_t i2c_addr = 0x20)`: Crea un objeto `MentorBitLeds`.
-    * `i2c_addr`: Dirección I2C del expansor PCF8574. El valor predeterminado es `0x20`.
+## Cómo empezar
 
-### Métodos
+### 1. **Conexión del Módulo**
 
-* `void begin()`: Inicializa el expansor PCF8574 y configura los pines para los LEDs como salidas.
-* `void encenderLed(uint8_t pin_Led, bool value)`: Enciende o apaga el LED especificado.
-    * `pin_Led`: Constante que representa el LED a controlar (`leds.led_rojo`, `leds.led_verde`, `leds.led_azul`).
-    * `value`: `true` para encender el LED, `false` para apagarlo.
+Conecta el módulo de diodos LED a uno de los puertos I2C( conector JST 4 pines) del apartado de "Comunicaciones" de la placa MentorBit. El módulo se comunica usando el protocolo I2C, por lo que requiere solo dos líneas de datos (SDA y SCL).
 
-### Constantes Públicas
+### 2. **Instalación de la Librería**
 
-* `const uint8_t led_rojo = 0`: Representa el pin del LED rojo.
-* `const uint8_t led_verde = 1`: Representa el pin del LED verde.
-* `const uint8_t led_azul = 2`: Representa el pin del LED azul.
+- Abre tu entorno de programación IDE de Arduino.
+- Ve al menú *Programa -> Incluir Librería -> Administrar Librerías...*
+- En el buscador, escribe ***MentorBit-3LED*** y haz clic en "Instalar".
+
+![Ejemplo de búsqueda en el gestor de librerías del IDE de Arduino.](https://github.com/DigitalCodesign/MentorBit-3LED/blob/main/assets/library_instalation_example.png)
+
+---
+
+## Ejemplo Básico: Encender LEDs
+
+Este ejemplo enciende el primer LED durante 1 segundo, luego el segundo, y luego el tercero.
+
+```cpp
+#include <MentorBit3LED.h>
+
+// Se define la direccion i2c del propio modulo
+#define DIRECIONI2C 0x27
+
+// Se crea el objeto ModuloLeds
+MentorBitLeds ModuloLeds(DIRECIONI2C);
+
+void setup() {
+    // Se inicializa el modulo
+    ModuloLeds.begin();
+}
+
+void loop() {
+    // Se enciende el led rojo
+    ModuloLeds.encenderLed(ModuloLeds.led_rojo,1);
+    delay(500);
+
+    // Se enciende el led verde
+    ModuloLeds.encenderLed(ModuloLeds.led_verde,1);
+    delay(500);
+
+    // Se enciende el led azul
+    ModuloLeds.encenderLed(ModuloLeds.led_azul,1);
+    delay(500);
+
+    // Se apagan todos los leds
+    ModuloLeds.encenderLed(ModuloLeds.led_rojo,0);
+    ModuloLeds.encenderLed(ModuloLeds.led_verde,0);
+    ModuloLeds.encenderLed(ModuloLeds.led_azul,0);
+    delay(500);
+}
+```
+
+---
+
+## Funciones Principales
+
+- `void inicializar()`  
+  Inicia la comunicación I2C con el módulo.
+
+- `void encenderLed(uint8_t pin_Led, bool value);`  
+  Enciende o apaga el led indicado (Para seleccionar el led, se diponen de atributos).
+
+---
+
+## Atributos Principales (clase leds)
+
+- `leds.led_rojo`  
+  Indica que se debe encender o apagar el led rojo.
+
+- `leds.led_verde`  
+  Indica que se debe encender o apagar el led verde.
+  
+- `leds.led_azul`  
+  Indica que se debe encender o apagar el led azul.
+
+
+## Recursos Adicionales
+
+- [Web del fabricante](https://digitalcodesign.com/)
+- [Tienda Online de Canarias](https://canarias.digitalcodesign.com/shop)
+- [Tienda Online de Península](https://digitalcodesign.com/shop)
+- [Web Oficial de MentorBit](https://digitalcodesign.com/mentorbit)
+- [Web Oficial del Módulo de LEDs](https://canarias.digitalcodesign.com/shop/00038744-mentorbit-modulo-de-diodos-led-8108?page=2&category=230&order=create_date+desc#attr=)
+- [Manual de usuario del Módulo](https://drive.google.com/file/d/1QqxorIjvnAdLID4zAATsbwt2K8MHA2c2/view?usp=drive_link)
+- [Modelo 3D del Módulo en formato .STEP](https://drive.google.com/file/d/1oPH0B8lDDnTdJasJ8dXMEbSGTseLxkro/view?usp=drive_link)
