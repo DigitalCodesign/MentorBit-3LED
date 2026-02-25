@@ -17,22 +17,29 @@
         
 
     Autor: Digital Codesign
-    Version: 1.0.0
+    Version: 1.1.0
     Fecha de creación: Septiembre de 2024
-    Fecha de version: Septiembre de 2024
+    Fecha de version: Febrero de 2026
     Repositorio: https://github.com/DigitalCodesign/MentorBit-3LED
     Descripcion: 
         Esta libreria esta especificamente diseñada para ser utilizada junto con 
-        el modulo MentorBit Leds
+        el modulo MentorBit Leds (basado en PCF8574). En esta versión se ha 
+        eliminado la dependencia de librerías externas, utilizando I2C nativo 
+        y operaciones de bits para lograr un código más ligero y rápido.
+        
     Metodos principales:
-        MentorBitLeds -> constructor de la clase
-        begin -> inicializador, debe colocarse en el setup
-        encenderLed -> enciende o apaga el led seleccionado
-    Atributos:
-        led_rojo -> indica a la funcion que se debe manipular el led rojo
-        led_verde -> indica a la funcion que se debe manipular el led verde
-        led_azul -> indica a la funcion que se debe manipular el led azul
-
+        MentorBitLeds(uint8_t i2c_addr) -> Constructor de la clase. Dirección I2C por defecto: 0x20.
+        begin() -> Inicializa el bus, apaga los LEDs y devuelve 'true' si encuentra el módulo.
+        setLed(led, estado) -> Enciende (true) o apaga (false) el LED seleccionado.
+        encenderLed(led) -> Enciende específicamente el LED indicado.
+        apagarLed(led) -> Apaga específicamente el LED indicado.
+        alternarLed(led) -> Cambia el estado actual del LED (si está apagado lo enciende, y viceversa).
+        encenderTodos() / apagarTodos() -> Controla los 3 LEDs de golpe.
+        
+    Enumeradores de color (MentorLed):
+        ROJO -> Indica a las funciones que se debe manipular el LED rojo.
+        VERDE -> Indica a las funciones que se debe manipular el LED verde.
+        AZUL -> Indica a las funciones que se debe manipular el LED azul.
 */
 
 #ifndef MentorBitLeds_h
