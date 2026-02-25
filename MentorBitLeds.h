@@ -39,23 +39,37 @@
 #define MentorBitLeds_h
 
 #include <MentorPort.h>
-#include <Adafruit_PCF8574.h>
+#include <Wire.h>
+
+enum MentorLed
+{
+    ROJO = 0, 
+    VERDE = 1,
+    AZUL = 2
+};
 
 class MentorBitLeds : public MentorPort
 {
     public:
 
-        MentorBitLeds(uint8_t i2c_addr = 0x20);
-        void begin();
-        void encenderLed(uint8_t pin_Led, bool value);
-        const uint8_t led_rojo = 0;
-        const uint8_t led_verde = 1;
-        const uint8_t led_azul = 2;
+        MentorBitLeds(uint8_t i2c_addr = 0x27);
+
+        bool begin();
+
+        void establecerLed(MentorLed led, bool estado);
+        void encenderLed(MentorLed led);
+        void apagarLed(MentorLed led);
+        void alternarLed(MentorLed led);
+
+        void apagarTodos();
+        void encenderTodos();
 
     private:
 
         uint8_t _i2c_addr;
-        Adafruit_PCF8574 pcf;
+        uint8_t _estado_pines;
+        void _actualizar();
+
 };
 
 #endif
